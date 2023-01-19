@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geometry_on_map_assignment/view/map/map_page.dart';
 import 'package:geometry_on_map_assignment/viewmodel/map_view_model.dart';
 
-final ChangeNotifierProvider<MapViewModel> leaderboardProvider =
+final ChangeNotifierProvider<MapViewModel> mapProvider =
     ChangeNotifierProvider((_) => MapViewModel());
 
 void main() {
