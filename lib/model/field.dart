@@ -45,4 +45,7 @@ class Field with _$Field {
   factory Field.fromJson(Map<String, Object?> json) => _$FieldFromJson(json);
 
   Geometry getGeometry() => WKT().parserGeographic().parse(geom.split(';')[1]);
+
+  Polygon getPolygon() =>
+      Polygon.parse(geom.split(';')[1], GeoPoint2.coordinates);
 }

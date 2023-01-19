@@ -59,6 +59,16 @@ class MapPage extends ConsumerWidget {
             },
           ),
         ),
+        PolygonLayerWidget(
+            options: PolygonLayerOptions(polygonCulling: false, polygons: [])
+            // polygonCulling: false,
+            // polygons: [
+            //     Polygon(
+            //       points: [LatLng(30, 40), LatLng(20, 50), LatLng(25, 45),],
+            //       color: Colors.blue,
+            //     ),
+            // ],
+            ),
       ],
     );
   }

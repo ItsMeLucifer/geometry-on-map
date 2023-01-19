@@ -54,6 +54,7 @@ class MapViewModel extends ChangeNotifier {
           await DataRepository.getFieldFromFile('assets/data/field.json');
       DebugUtils.printSuccess('Fetched field: $field');
       DebugUtils.printInfo('Geometry data: ${field.getGeometry().toString()}');
+      DebugUtils.printInfo('Polygon data: ${field.getPolygon().toString()}');
       this.field = field;
       fieldFetchStatus = FetchStatus.fetched;
     } catch (e) {
