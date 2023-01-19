@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:geocore/geocore.dart';
 import 'package:geometry_on_map_assignment/model/crop_history_instance.dart';
 part 'field.freezed.dart';
 part 'field.g.dart';
@@ -24,6 +25,7 @@ part 'field.g.dart';
 /// Created with freezed and json_serializable.
 @freezed
 class Field with _$Field {
+  const Field._();
   const factory Field({
     required int id,
     required int user,
@@ -41,4 +43,6 @@ class Field with _$Field {
   }) = _Field;
 
   factory Field.fromJson(Map<String, Object?> json) => _$FieldFromJson(json);
+
+  Geometry getGeometry() => WKT().parserGeographic().parse(geom.split(';')[1]);
 }

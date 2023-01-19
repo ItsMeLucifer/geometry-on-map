@@ -22,10 +22,13 @@ CropHistoryInstance _$CropHistoryInstanceFromJson(Map<String, dynamic> json) {
 mixin _$CropHistoryInstance {
   int get id => throw _privateConstructorUsedError;
   Map<String, dynamic> get crop => throw _privateConstructorUsedError;
-  String get label => throw _privateConstructorUsedError;
-  String get start_date => throw _privateConstructorUsedError;
+  String get label =>
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
+  String get start_date =>
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
   String get end_date => throw _privateConstructorUsedError;
-  double get yields => throw _privateConstructorUsedError;
+  double get yields =>
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
   double? get yields_forecast => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -204,12 +207,15 @@ class _$_CropHistoryInstance
 
   @override
   final String label;
+// ignore: non_constant_identifier_names
   @override
   final String start_date;
+// ignore: non_constant_identifier_names
   @override
   final String end_date;
   @override
   final double yields;
+// ignore: non_constant_identifier_names
   @override
   final double? yields_forecast;
 
@@ -295,13 +301,13 @@ abstract class _CropHistoryInstance implements CropHistoryInstance {
   Map<String, dynamic> get crop;
   @override
   String get label;
-  @override
+  @override // ignore: non_constant_identifier_names
   String get start_date;
-  @override
+  @override // ignore: non_constant_identifier_names
   String get end_date;
   @override
   double get yields;
-  @override
+  @override // ignore: non_constant_identifier_names
   double? get yields_forecast;
   @override
   @JsonKey(ignore: true)

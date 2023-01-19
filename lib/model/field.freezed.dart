@@ -24,9 +24,10 @@ mixin _$Field {
   int get user => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
-  String get geom => throw _privateConstructorUsedError;
+  String get geom =>
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
   List<CropHistoryInstance> get crop_history =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
   int get area_ag => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   double get hectares => throw _privateConstructorUsedError;
@@ -223,7 +224,7 @@ class __$$_FieldCopyWithImpl<$Res> extends _$FieldCopyWithImpl<$Res, _$_Field>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Field with DiagnosticableTreeMixin implements _Field {
+class _$_Field extends _Field with DiagnosticableTreeMixin {
   const _$_Field(
       {required this.id,
       required this.user,
@@ -236,7 +237,8 @@ class _$_Field with DiagnosticableTreeMixin implements _Field {
       required this.hectares,
       required this.area,
       required this.created})
-      : _crop_history = crop_history;
+      : _crop_history = crop_history,
+        super._();
 
   factory _$_Field.fromJson(Map<String, dynamic> json) =>
       _$$_FieldFromJson(json);
@@ -251,7 +253,9 @@ class _$_Field with DiagnosticableTreeMixin implements _Field {
   final String comment;
   @override
   final String geom;
+// ignore: non_constant_identifier_names
   final List<CropHistoryInstance> _crop_history;
+// ignore: non_constant_identifier_names
   @override
   List<CropHistoryInstance> get crop_history {
     if (_crop_history is EqualUnmodifiableListView) return _crop_history;
@@ -259,6 +263,7 @@ class _$_Field with DiagnosticableTreeMixin implements _Field {
     return EqualUnmodifiableListView(_crop_history);
   }
 
+// ignore: non_constant_identifier_names
   @override
   final int area_ag;
   @override
@@ -343,7 +348,7 @@ class _$_Field with DiagnosticableTreeMixin implements _Field {
   }
 }
 
-abstract class _Field implements Field {
+abstract class _Field extends Field {
   const factory _Field(
       {required final int id,
       required final int user,
@@ -356,6 +361,7 @@ abstract class _Field implements Field {
       required final double hectares,
       required final double area,
       required final String created}) = _$_Field;
+  const _Field._() : super._();
 
   factory _Field.fromJson(Map<String, dynamic> json) = _$_Field.fromJson;
 
@@ -369,9 +375,9 @@ abstract class _Field implements Field {
   String get comment;
   @override
   String get geom;
-  @override
+  @override // ignore: non_constant_identifier_names
   List<CropHistoryInstance> get crop_history;
-  @override
+  @override // ignore: non_constant_identifier_names
   int get area_ag;
   @override
   String get status;
