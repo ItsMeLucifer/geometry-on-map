@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geometry_on_map_assignment/common/debug_utils.dart';
 import 'package:geometry_on_map_assignment/main.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:geometry_on_map_assignment/viewmodel/map_view_model.dart';
+import 'package:geometry_on_map_assignment/model/field.dart';
 
 class MapPage extends ConsumerWidget {
   const MapPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mapVM = ref.watch(mapProvider);
     return Scaffold(
       body: Container(
-        child: mapVM.fieldFetchStatus == FetchStatus.fetched
-            ? _buildMap(context, ref)
-            : _buildProgressIndicator(context),
+        child: _buildMap(context, ref),
       ),
-    );
-  }
-
-  Widget _buildProgressIndicator(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
     );
   }
 
@@ -37,39 +28,53 @@ class MapPage extends ConsumerWidget {
             urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
             userAgentPackageName: 'com.assignment.geometry_on_map',
             retinaMode: MediaQuery.of(context).devicePixelRatio > 1.0,
+            tileProvider: NetworkTileProvider(),
           ),
         ),
-        MarkerClusterLayerWidget(
-          options: MarkerClusterLayerOptions(
-            maxClusterRadius: 80,
-            size: const Size(40, 40),
-            markers: [],
-            polygonOptions: const PolygonOptions(
-              borderColor: Colors.redAccent,
-              borderStrokeWidth: 3,
-            ),
-            builder: (context, markers) {
-              return FloatingActionButton(
-                backgroundColor: Theme.of(context).colorScheme.tertiary,
-                onPressed: null,
-                child: Text(
-                  markers.length.toString(),
-                ),
-              );
-            },
-          ),
-        ),
-        PolygonLayerWidget(
-            options: PolygonLayerOptions(polygonCulling: false, polygons: [])
-            // polygonCulling: false,
-            // polygons: [
-            //     Polygon(
-            //       points: [LatLng(30, 40), LatLng(20, 50), LatLng(25, 45),],
-            //       color: Colors.blue,
-            //     ),
-            // ],
-            ),
+        _buildPolygonLayer(context, ref),
       ],
     );
+  }
+
+  Widget _buildPolygonLayer(BuildContext context, WidgetRef ref) {
+    final mapVM = ref.read(mapProvider);
+    return FutureBuilder<Field>(
+      future: mapVM.fetchFieldData(),
+      builder: ((context, snapshot) {
+        if (snapshot.hasError) {
+          DebugUtils.printError(snapshot.error.toString());
+        }
+
+        return PolygonLayerWidget(
+          options: PolygonLayerOptions(
+            polygonCulling: true,
+            polygons: _getPolygonsFromSnapshot(context, snapshot: snapshot),
+          ),
+        );
+      }),
+    );
+  }
+
+  List<Polygon> _getPolygonsFromSnapshot(
+    BuildContext context, {
+    required AsyncSnapshot<Field> snapshot,
+  }) {
+    if (!snapshot.hasData && snapshot.data == null) {
+      return [];
+    }
+
+    return snapshot.data!
+        .getCoordinates()
+        .map(
+          (part) => Polygon(
+            points: part,
+            color: Colors.blue,
+            borderColor: Colors.blue,
+            borderStrokeWidth: 4.0,
+            label: snapshot.data!.id.toString(),
+            labelStyle: Theme.of(context).textTheme.bodyMedium!,
+          ),
+        )
+        .toList();
   }
 }

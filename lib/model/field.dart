@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geocore/geocore.dart';
+import 'package:geometry_on_map_assignment/common/geo_utils.dart';
 import 'package:geometry_on_map_assignment/model/crop_history_instance.dart';
+import 'package:latlong2/latlong.dart';
 part 'field.freezed.dart';
 part 'field.g.dart';
 
@@ -46,6 +48,13 @@ class Field with _$Field {
 
   Geometry getGeometry() => WKT().parserGeographic().parse(geom.split(';')[1]);
 
-  Polygon getPolygon() =>
-      Polygon.parse(geom.split(';')[1], GeoPoint2.coordinates);
+  List<List<LatLng>> getCoordinates() {
+    final geometry = getGeometry();
+    switch (geometry.typeGeom) {
+      case Geom.polygon:
+        return GeoUtils.getCoordinatesFromPolygon(geometry);
+      default:
+        return [];
+    }
+  }
 }
