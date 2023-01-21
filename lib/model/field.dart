@@ -48,13 +48,5 @@ class Field with _$Field {
 
   Geometry getGeometry() => WKT().parserGeographic().parse(geom.split(';')[1]);
 
-  List<List<LatLng>> getCoordinates() {
-    final geometry = getGeometry();
-    switch (geometry.typeGeom) {
-      case Geom.polygon:
-        return GeoUtils.getCoordinatesFromPolygon(geometry);
-      default:
-        return [];
-    }
-  }
+  List<List<LatLng>> getCoordinates() => GeoUtils.getCoordinatesFromPolygon(getGeometry());
 }
