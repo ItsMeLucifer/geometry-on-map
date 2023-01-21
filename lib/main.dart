@@ -17,14 +17,18 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: const TextTheme(
-            bodyMedium: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-            ),
-          )),
+        primarySwatch: Colors.blue,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue).copyWith(
+          outline: Colors.tealAccent[700],
+        ),
+      ),
       home: const MapPage(),
     );
   }

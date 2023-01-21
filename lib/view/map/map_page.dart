@@ -36,6 +36,11 @@ class MapPage extends ConsumerWidget {
     );
   }
 
+  /// A `FutureBuilder`, which returns a `PolygonLayerWidget`
+  /// with polygons created from the geometry of the `Field` object.
+  ///
+  /// The field object is obtained by calling
+  /// the ```mapVM.fetchFieldData()``` method.
   Widget _buildPolygonLayer(BuildContext context, WidgetRef ref) {
     final mapVM = ref.read(mapProvider);
     return FutureBuilder<Field>(
@@ -59,7 +64,7 @@ class MapPage extends ConsumerWidget {
     BuildContext context, {
     required AsyncSnapshot<Field> snapshot,
   }) {
-    if (!snapshot.hasData && snapshot.data == null) {
+    if (!snapshot.hasData || snapshot.data == null) {
       return [];
     }
 
@@ -68,8 +73,8 @@ class MapPage extends ConsumerWidget {
         .map(
           (part) => Polygon(
             points: part,
-            color: Colors.blue,
-            borderColor: Colors.blue,
+            color: Theme.of(context).colorScheme.outline,
+            borderColor: Theme.of(context).colorScheme.outline,
             borderStrokeWidth: 4.0,
             label: snapshot.data!.id.toString(),
             labelStyle: Theme.of(context).textTheme.bodyMedium!,
