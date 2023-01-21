@@ -76,7 +76,7 @@ class MapPage extends ConsumerWidget {
             color: Theme.of(context).colorScheme.outline,
             borderColor: Theme.of(context).colorScheme.outline,
             borderStrokeWidth: 4.0,
-            label: snapshot.data!.name,
+            label: "${snapshot.data!.name} (${snapshot.data!.id})",
             labelStyle: Theme.of(context).textTheme.bodyMedium!,
           ),
         )
